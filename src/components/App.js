@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import News from './News/News'
+import SideNews from './News/SideNews'
 
 class App extends React.Component{
   constructor(props){
@@ -14,17 +15,33 @@ class App extends React.Component{
     news2: {
       type: "everything",
       query: "domains=techcrunch.com&language=en"
+    },
+    news3:{
+      type:"everything",
+      query:"domains=comicbookmovie.com&language=en"
     }
   }
 }
   render(){
     return (
-      <div className="App">
-        <header className="App-header">
-           <p>My Feed</p>
-        </header>
-        <News news={this.state.news1}/>
-        <News news={this.state.news2}/>
+      <div className="container-fluid">
+        <div className="navbar-fixed">
+          <nav>
+            <div className="nav-wrapper indigo lighten-4">
+              <a href="/" className="brand-logo center">My Feed</a>
+            </div>
+          </nav>
+
+        </div>
+        <div className="row">
+          <div className="col s8">
+            <News news={this.state.news1}/>
+            <News news={this.state.news2}/>
+          </div>
+          <div className="col s4">
+            <SideNews news={this.state.news3}/>
+          </div>
+        </div>
       </div>
     );
 
@@ -33,3 +50,4 @@ class App extends React.Component{
 }
 
 export default App;
+
