@@ -1,23 +1,44 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import SingleSide from './SingleSide'
+import Error from './Error'
+
 
 class SideNews extends Component {
     constructor(props){
         super(props);
         this.state ={
-            sidenews: []
+            sidenews: [],
+            error: false
         }
     }
 
     componentDidMount(){
+        const url =`http://newsapi.org/v2/${this.props.news.type}?${this.props.news.query}&apiKey=6b21cf68205242f1a125cd091578c4f8`;
 
+        axios.get(url)
+        .then((response) => {
+            this.setState({
+                sidenews: response.data.articles
+            })
+        })
+        .catch((error) => {
+            this.setState({
+                error: true
+            })
+        })
 
     }
     renderItems(){
-        return this.state.news.map((item) => (
+        if(!this.state.error){
+        return this.state.sidenews.map((item) => (
             <SingleSide  key={item.url} item={item}/>
         ));
+        }else{
+            return <Error />
+        }
     }
+
     render() {
         return (
             <div>
@@ -25,7 +46,7 @@ class SideNews extends Component {
             </div>
         )
     }
-    
+
 }
 
 export default SideNews
